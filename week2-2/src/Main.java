@@ -3,15 +3,15 @@ import java.util.Scanner;
 public class Main {
 	public static void Readability(int R) {
 		switch(R) {
-		case 1:System.out.print("Unreadable");break;
-		case 2:System.out.print("Barely readable, "
+		case 1:System.out.print("unreadable");break;
+		case 2:System.out.print("barely readable, "
 				+ "occasional words distinguishable");
 											  break;
-		case 3:System.out.print("Readable with "
+		case 3:System.out.print("readable with "
 				+ "considerable difficulty"); break;
-		case 4:System.out.print("Readable with "
+		case 4:System.out.print("readable with "
 				+ "practically no difficulty");break;
-		case 5:System.out.print("Perfectly readable");break;
+		case 5:System.out.print("perfectly readable");break;
 		}
 	}
 	public static void Strength(int S) {
@@ -31,7 +31,7 @@ public class Main {
 		Scanner in = new Scanner(System.in);
 		int n = in.nextInt();
 		Strength(n%10);
-		System.out.print(",");
+		System.out.print(", ");
 		Readability(n/10);
 		System.out.print(".");
 	}
