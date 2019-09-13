@@ -1,87 +1,97 @@
 import java.math.BigInteger;
 
 /**
- * 第一周算法练习-斐波那契数列
- * 2019-09-01
+ * 第一周算法练习-斐波那契数列 2019-09-01
  * 
  * @author 赵宜珺
  *
  */
 public class Fibonacci {
 
-    /**
-     * 递归
-     * 
-     * @param n
-     * @return
-     */
-    public static BigInteger recursive(int n) {
-        if (n == 0 || n == 1)
-            return BigInteger.valueOf(n);
-        return recursive(n - 1).add(recursive(n - 2));
-    }
+	/**
+	 * 递归
+	 * 
+	 * @param n
+	 * @return
+	 */
+	public static BigInteger recursive(int n) {
+		if (n == 0 || n == 1)
+			return BigInteger.valueOf(n);
+		return recursive(n - 1).add(recursive(n - 2));
+	}
 
-    /**
-     * 非递归
-     * 
-     * @param n
-     * @return
-     */
-    public static BigInteger unrecursive(int n) {
-        if (n == 0 || n == 1)
-            return BigInteger.valueOf(n);
-        if (n == 2)
-            return new BigInteger("1");
-        BigInteger f1 = new BigInteger("0");
-        BigInteger f2 = new BigInteger("1");
-        BigInteger f3 = new BigInteger("0");
-        for (int i = 2; i <= n; i++) {
-            f3 = f1.add(f2);
-            f1 = f2;
-            f2 = f3;
-        }
-        return f3;
-    }
+	/**
+	 * 优化的递归方法
+	 * 
+	 */
+	public static BigInteger optimizeRecursive(BigInteger num1, BigInteger num2, int n) {
+		if(n > 1) {
+			return optimizeRecursive(num1.add(num2), num1, n - 1);
+		}
+		return num1.add(num2);
+	}
 
-    public static void main(String[] args) {
-        // 计算出n 为 2,8,16,32,64,128,512,1024 时 F(n)的值
-        int[] num = new int[8];
-        num[0] = 2;
-        num[1] = 8;
-        for (int i = 2; i < num.length; i++) {
-            num[i] = 2 * num[i - 1];
-        }
-        num[6] = 512;
-        num[7] = 1024;
+	/**
+	 * 非递归
+	 * 
+	 * @param n
+	 * @return
+	 */
+	public static BigInteger unrecursive(int n) {
+		if (n == 0 || n == 1)
+			return BigInteger.valueOf(n);
+		if (n == 2)
+			return new BigInteger("1");
+		BigInteger f1 = new BigInteger("0");
+		BigInteger f2 = new BigInteger("1");
+		BigInteger f3 = new BigInteger("0");
+		for (int i = 2; i <= n; i++) {
+			f3 = f1.add(f2);
+			f1 = f2;
+			f2 = f3;
+		}
+		return f3;
+	}
 
-        long start = 0L, end = 0L;
-        // 非递归
-        System.out.println("非递归");
-        for (int i = 0; i < num.length; i++) {
+	public static void main(String[] args) {
+		// 计算出n 为 2,8,16,32,64,128,512,1024 时 F(n)的值
+		int[] num = new int[8];
+		num[0] = 2;
+		num[1] = 8;
+		for (int i = 2; i < num.length; i++) {
+			num[i] = 2 * num[i - 1];
+		}
+		num[6] = 512;
+		num[7] = 1024;
 
-            start = System.nanoTime();
+		long start = 0L, end = 0L;
+		 // 非递归
+		System.out.println("非递归");
+		for (int i = 0; i < num.length; i++) {
 
-            System.out.print("F[" + num[i] + "] = " + unrecursive(num[i]) + " ");
+			start = System.nanoTime();
 
-            end = System.nanoTime();
+			System.out.print("F[" + num[i] + "] = " + unrecursive(num[i]) + " ");
 
-            System.out.println("time：" + (end - start) + "ns");
-        }
+			end = System.nanoTime();
 
-        // 递归
-        System.out.println("递归");
-        for (int i = 0; i < num.length; i++) {
+			System.out.println("time：" + (end - start) + "ns");
+		}
 
-            start = System.nanoTime();
+		// 递归
+		System.out.println("递归");
+		for (int i = 0; i < num.length; i++) {
 
-            System.out.print("F[" + num[i] + "] = " + recursive(num[i]) + " ");
+			start = System.nanoTime();
 
-            end = System.nanoTime();
+			System.out.print("F[" + num[i] + "] = " + optimizeRecursive(BigInteger.valueOf(0), BigInteger.valueOf(1), num[i]) + " ");
 
-            System.out.println("time：" + (end - start) + "ns");
+			end = System.nanoTime();
 
-        }
-    }
+			System.out.println("time：" + (end - start) + "ns");
+
+		}
+	}
 
 }
 
